@@ -1,0 +1,66 @@
+## 静态代码块、非静态代码块、构造函数执行顺序
+example 1:
+```
+public class StaticBlockTest {
+
+    {
+        System.out.println("normal test");
+    }
+
+    static {
+        System.out.println("static test");
+    }
+
+    public StaticBlockTest() {
+    }
+
+    public static void main(String[] args) {
+        StaticBlockTest test = new StaticBlockTest();
+
+        StaticBlockTest another = new StaticBlockTest();
+    }
+
+}
+```
+执行结果：
+```
+static test
+normal test
+normal test
+```
+
+example 2:
+```
+public class StaticBlockingTest {
+
+    {
+        System.out.println("构造块");
+    }
+
+    public static StaticBlockingTest a = new StaticBlockingTest();
+
+    public static  StaticBlockingTest b = new StaticBlockingTest();
+
+    static {
+        System.out.println("静态构造块");
+    }
+
+    public StaticBlockingTest() {
+        System.out.println("构造函数");
+    }
+
+    public static void main(String[] args) {
+        StaticBlockingTest c = new StaticBlockingTest();
+    }
+}
+```
+执行结果：
+```
+构造块
+构造函数
+构造块
+构造函数
+静态构造块
+构造块
+构造函数
+```
